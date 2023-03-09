@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ChatBox from "./Components/ChatBox";
+import { Character } from "./Utils/Types";
+
+const Elon: Character = {
+  id: 1,
+  FirstName: "Elon",
+  LastName: "Musk",
+  picture:
+    "https://en.wikipedia.org/wiki/Elon_Musk#/media/File:Elon_Musk_2015.jpg",
+};
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ChatBox character={Elon} />
     </div>
   );
 }
