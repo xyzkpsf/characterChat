@@ -1,54 +1,121 @@
-import "react-chat-elements/dist/main.css";
-import { MessageList, Avatar, Input, Button } from "react-chat-elements";
+import { useEffect, useRef } from 'react';
+import style from 'styled-components';
+import 'react-chat-elements/dist/main.css';
+import { MessageList, Avatar, Input, Button } from 'react-chat-elements';
 
-// take character object, and message list as input
-const ChatView = (props) => {
+const ChatViewWrapper = style.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HeaderWrapper = style.div`
+  height: 80px;
+  width: 100%;
+  display: flex;
+  fiex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const AvatarWrapper = style.div`
+  padding-left: 20px;
+`;
+
+const FooterWrapper = style.div`
+  display: flex;
+  flex-direction: row;  
+  width: 100%;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const InputWrapper = style.div`
+  width: 80%;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid #e0e0e0;
+`;
+
+const SendButtonWrapper = style.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .rce-button {
+    height: 40px;
+  }
+`;
+
+const BodyWrapper = style.div`
+  width: 100%;
+  height: calc(100% - 160px);
+`;
+
+const renderMessageList = () => {
   return (
-    <div>
-      <div>
-        <Avatar
-          src="https://avatars.githubusercontent.com/u/80540635?v=4"
-          alt="avatar"
-          size="xlarge"
-          type="rounded"
-        />
-        ;
-      </div>
-      <div>
-        <MessageList
-          className="message-list"
-          lockable={true}
-          toBottomHeight={"100%"}
-          dataSource={[
-            {
-              position: "left",
-              type: "text",
-              title: "Kursat",
-              text: "Give me a message list example !",
-            },
-            {
-              position: "right",
-              type: "text",
-              title: "Emre",
-              text: "That's all.",
-            },
-          ]}
-        />
-      </div>
-      <div>
-        <Input placeholder="Type here..." multiline={true} />
-        <Button
-          text={"Send"}
-          onClick={() => alert("Sending...")}
-          title="Send"
-          // icon ={
-          //   float:'left',
-          //   size:15,
-          //   component:<IconExample/>
-          // }
-        />
-      </div>
-    </div>
+    <MessageList
+      lockable={true}
+      toBottomHeight={'100%'}
+      dataSource={[
+        {
+          position: 'left',
+          type: 'text',
+          title: 'Kursat',
+          text: 'Give me a message list example !'
+        },
+        {
+          position: 'right',
+          type: 'text',
+          title: 'Emre',
+          text: "That's all."
+        }
+      ]}
+    />
+  );
+};
+
+const ChatView = (props) => {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+  });
+
+  const handleInputOnChange = (value) => {
+    inputRef.current.value = value;
+  };
+
+  const handleSendButtonOnClick = () => {
+    if (inputRef.current.value) {
+      console.log(inputRef.current.value);
+      inputRef.current.value = '';
+    }
+  };
+
+  //todo create a message list via handleSendButtonOnClick
+
+  return (
+    <ChatViewWrapper>
+      <HeaderWrapper>
+        <AvatarWrapper>
+          <Avatar src="https://avatars.githubusercontent.com/u/80540635?v=4" alt="avatar" size="xlarge" type="rounded" />
+        </AvatarWrapper>
+      </HeaderWrapper>
+      <BodyWrapper>{renderMessageList()}</BodyWrapper>
+      <FooterWrapper>
+        <InputWrapper>
+          <Input placeholder="Type here..." referance={inputRef} onChange={(e) => handleInputOnChange(e.target.value)} />
+        </InputWrapper>
+        <SendButtonWrapper>
+          <Button text={'Send'} onClick={() => handleSendButtonOnClick()} title="Send" />
+        </SendButtonWrapper>
+      </FooterWrapper>
+    </ChatViewWrapper>
   );
 };
 
