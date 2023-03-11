@@ -97,7 +97,9 @@ const ChatView = (props) => {
     }
   };
 
-  //todo create a message list via handleSendButtonOnClick
+  //TODO create a message list via handleSendButtonOnClick
+  // TODO create be api to call get response from server
+  // FIXME here
 
   return (
     <ChatViewWrapper>

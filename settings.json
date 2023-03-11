@@ -1,8 +1,51 @@
 {
+  "workbench.colorTheme": "One Dark Pro",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.bracketPairColorization.enabled": true,
+  "editor.fontSize": 16,
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true,
-  "editor.wordWrap": "on",
-  "git.ignoreLimitWarning": true
+  "python.formatting.provider": "autopep8",
+  "editor.suggestSelection": "first",
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "editor.fontLigatures": true,
+  "editor.linkedEditing": true,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
+  },
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  "editor.tabSize": 2,
+  "files.autoSave": "afterDelay",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.iconTheme": "vscode-icons",
+  "editor.inlineSuggest.enabled": true,
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "todo-tree.highlights.defaultHighlight": {
+    "icon": "alert",
+    "type": "text-and-comment",
+    "foreground": "#ff8000",
+    "background": "#ffffff",
+    "opacity": 50,
+    "iconColour": "#00ff2a",
+    "gutterIcon": true
+  },
+  "todo-tree.highlights.customHighlight": {
+    "TODO": {
+      "foreground": "#fee033",
+      "iconColour": "#fee033",
+      "icon": "check",
+      "type": "line"
+    },
+    "FIXME": {
+      "foreground": "#fc2828",
+      "iconColour": "#fc2828",
+      "gutterIcon": true
+    }
+  }
 }
