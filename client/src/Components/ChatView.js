@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import style from 'styled-components';
 import 'react-chat-elements/dist/main.css';
 import { MessageList, Avatar, Input, Button } from 'react-chat-elements';
@@ -56,30 +56,10 @@ const BodyWrapper = style.div`
   height: calc(100% - 160px);
 `;
 
-const renderMessageList = () => {
-  return (
-    <MessageList
-      lockable={true}
-      toBottomHeight={'100%'}
-      dataSource={[
-        {
-          position: 'left',
-          type: 'text',
-          title: 'Kursat',
-          text: 'Give me a message list example !'
-        },
-        {
-          position: 'right',
-          type: 'text',
-          title: 'Emre',
-          text: "That's all."
-        }
-      ]}
-    />
-  );
-};
-
+// TODO: Server should return a first response to client
 const ChatView = (props) => {
+  const [dataSource, setDataSource] = useState([]);
+
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -92,14 +72,38 @@ const ChatView = (props) => {
 
   const handleSendButtonOnClick = () => {
     if (inputRef.current.value) {
-      console.log(inputRef.current.value);
+      const newMessage = {
+        position: 'right',
+        type: 'text',
+        title: 'You',
+        text: inputRef.current.value
+      };
+      setDataSource((dataSource) => [...dataSource, newMessage]);
       inputRef.current.value = '';
+
+      // TODO: send an async call to server and render response to frontend
+      // TODO: deceide how to handle error: Show in UI or just log in console
+      fetch('/ahoy')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.response) {
+            const ResponseMessage = {
+              position: 'left',
+              type: 'text',
+              title: 'Mando',
+              text: data.response
+            };
+            setDataSource((dataSource) => [...dataSource, ResponseMessage]);
+          }
+        });
     }
   };
 
-  //TODO create a message list via handleSendButtonOnClick
+  const renderMessageList = () => {
+    return <MessageList lockable={true} toBottomHeight={'100%'} dataSource={dataSource} />;
+  };
+
   // TODO create be api to call get response from server
-  // FIXME here
 
   return (
     <ChatViewWrapper>
