@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from flask import Flask, send_from_directory
 
+API_KEY = os.environ.get('API_KEY')
+
 CURRENT_DIR = os.path.dirname(__file__)
 client_folder = CURRENT_DIR + '/../client/build/'
 # app = Flask(__name__, static_folder=client_folder)

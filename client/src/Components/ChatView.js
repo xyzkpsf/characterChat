@@ -81,8 +81,8 @@ const ChatView = (props) => {
       setDataSource((dataSource) => [...dataSource, newMessage]);
       inputRef.current.value = '';
 
-      // TODO: send an async call to server and render response to frontend
       // TODO: deceide how to handle error: Show in UI or just log in console
+      // TODO: fix title here base on props or server response
       fetch('/ahoy')
         .then((res) => res.json())
         .then((data) => {
