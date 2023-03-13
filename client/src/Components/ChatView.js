@@ -83,7 +83,13 @@ const ChatView = (props) => {
 
       // TODO: deceide how to handle error: Show in UI or just log in console
       // TODO: fix title here base on props or server response
-      fetch('/ahoy')
+      fetch('/chat', {
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: JSON.stringify({ message: 'hey hey' })
+      })
         .then((res) => res.json())
         .then((data) => {
           if (data && data.response) {
