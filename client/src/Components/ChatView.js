@@ -57,6 +57,7 @@ const BodyWrapper = style.div`
 `;
 
 // TODO: Server should return a first response to client
+// TODO: add speech recognition
 const ChatView = (props) => {
   const [dataSource, setDataSource] = useState([]);
 
@@ -72,14 +73,15 @@ const ChatView = (props) => {
 
   const handleSendButtonOnClick = () => {
     if (inputRef.current.value) {
+      const userInput = inputRef.current.value;
+      inputRef.current.value = '';
       const newMessage = {
         position: 'right',
         type: 'text',
         title: 'You',
-        text: inputRef.current.value
+        text: userInput
       };
       setDataSource((dataSource) => [...dataSource, newMessage]);
-      inputRef.current.value = '';
 
       // TODO: deceide how to handle error: Show in UI or just log in console
       // TODO: fix title here base on props or server response
@@ -88,7 +90,7 @@ const ChatView = (props) => {
           'Content-Type': 'application/json'
         },
         method: 'post',
-        body: JSON.stringify({ message: 'hey hey' })
+        body: JSON.stringify({ message: userInput })
       })
         .then((res) => res.json())
         .then((data) => {
@@ -108,8 +110,6 @@ const ChatView = (props) => {
   const renderMessageList = () => {
     return <MessageList lockable={true} toBottomHeight={'100%'} dataSource={dataSource} />;
   };
-
-  // TODO create be api to call get response from server
 
   return (
     <ChatViewWrapper>

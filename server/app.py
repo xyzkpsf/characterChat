@@ -16,19 +16,19 @@ messages = [{"role": "system", "content": "You are the main character, Din Djari
 # TODO: Add character handle mapping here
 
 # TODO: check when it's a new chat
+# TODO: add Rate limit for each conversation and ip address
 @app.route('/chat', methods=['POST'])
 def chat():
     req_data = request.get_json()
-    print('req_data',req_data)
+    input_message = req_data['message']
     try:
-        messages.append({"role": "user", "content": "Hi Mando, where is the baby Yoda?"})
+        messages.append({"role": "user", "content": input_message})
         completion = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=messages
         )
         chat_response = completion.choices[0].message.content
-        print("completion",completion)
-        print('chat_response',chat_response)
+        messages.append({"role": "system", "content": chat_response})
         response_body = {
             'response': chat_response
         }
