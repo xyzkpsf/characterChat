@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import style from 'styled-components';
 import 'react-chat-elements/dist/main.css';
 import { MessageList, Avatar, Input, Button } from 'react-chat-elements';
+import VoiceInput from './VoiceInput';
 
 const ChatViewWrapper = style.div`
   width: 100%;
@@ -55,6 +56,11 @@ const BodyWrapper = style.div`
   width: 100%;
   height: calc(100% - 160px);
 `;
+
+// TODO: stype the voice input here
+const VoiceInputWrapper = style.div`
+  display: flex;
+  `;
 
 // TODO: Server should return a first response to client
 // TODO: add speech recognition
@@ -125,6 +131,9 @@ const ChatView = (props) => {
         </InputWrapper>
         <SendButtonWrapper>
           <Button text={'Send'} onClick={() => handleSendButtonOnClick()} title="Send" />
+          <VoiceInputWrapper>
+            <VoiceInput />
+          </VoiceInputWrapper>
         </SendButtonWrapper>
       </FooterWrapper>
     </ChatViewWrapper>
