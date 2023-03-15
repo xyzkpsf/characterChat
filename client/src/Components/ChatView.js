@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 import style from 'styled-components';
 import 'react-chat-elements/dist/main.css';
 import { MessageList, Avatar, Input, Button } from 'react-chat-elements';
-import VoiceInput from './VoiceInput';
 
 const ChatViewWrapper = style.div`
   width: 100%;
@@ -132,7 +131,7 @@ const ChatView = (props) => {
         <SendButtonWrapper>
           <Button text={'Send'} onClick={() => handleSendButtonOnClick()} title="Send" />
           <VoiceInputWrapper>
-            <VoiceInput />
+            {/* <VoiceInput /> */}
           </VoiceInputWrapper>
         </SendButtonWrapper>
       </FooterWrapper>
