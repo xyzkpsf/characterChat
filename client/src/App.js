@@ -1,9 +1,10 @@
 import style from 'styled-components';
 import ChatView from './Components/ChatView';
+import Home from './Components/Home';
 
 const AppWrapper = style.div`
   display: grid;
-  grid-template-columns: 1fr minmax(600px, 3fr) 1fr;
+  // grid-template-columns: 1fr minmax(600px, 3fr) 1fr;
   width: 100%;
   height: 100%;
 `;
@@ -23,9 +24,10 @@ const RightPanel = style.div`
 function App() {
   return (
     <AppWrapper>
-      <LeftPanel></LeftPanel>
+      {/* <LeftPanel></LeftPanel>
       <ChatView></ChatView>
-      <RightPanel></RightPanel>
+      <RightPanel></RightPanel> */}
+      <Home />
     </AppWrapper>
   );
 }
