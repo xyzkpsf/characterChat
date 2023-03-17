@@ -1,7 +1,8 @@
 import React from 'react';
 import style from 'styled-components';
+import { motion } from 'framer-motion';
 
-import { CHARACTERS, shuffleArray, clone } from '../util';
+import { CHARACTERS, shuffleArray, clone, getRange } from '../util';
 
 const HomeWrapper = style.div`
   display: flex;
@@ -54,10 +55,12 @@ const renderProfileSection = () => {
   shuffleArray(characters);
   return characters.map((c) => {
     return (
-      <ProfileWrapper>
-        <img src={c.url} alt={c.name} />
-        <span>{c.name}</span>
-      </ProfileWrapper>
+      <motion.div animate={{ x: getRange(window.innerWidth) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+        <ProfileWrapper>
+          <img src={c.url} alt={c.name} />
+          <span>{c.name}</span>
+        </ProfileWrapper>
+      </motion.div>
     );
   });
 };
