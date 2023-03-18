@@ -34,6 +34,7 @@ const ProfileSectionWrapper = style.div`
   column-gap: 20px;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 `;
 
 const ProfileWrapper = style.div`
@@ -41,7 +42,6 @@ const ProfileWrapper = style.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  row-gap: 10px;
   
   img {
     width: 150px;
@@ -53,19 +53,18 @@ const ProfileWrapper = style.div`
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
-  return characters.map((c) => {
+  return characters.map((c, idx) => {
     return (
-      <motion.div animate={{ x: getRange(window.innerWidth) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+      <motion.div animate={{ x: getRange(window.innerWidth, characters.length, idx) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
         <ProfileWrapper>
           <img src={c.url} alt={c.name} />
-          <span>{c.name}</span>
+          <span>{idx}</span>
         </ProfileWrapper>
       </motion.div>
     );
   });
 };
 
-// TODO: call frame animation here
 function Home(props) {
   return (
     <HomeWrapper>
