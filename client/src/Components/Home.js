@@ -34,7 +34,7 @@ const ProfileSectionWrapper = style.div`
   column-gap: 20px;
   justify-content: center;
   align-items: center;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 `;
 
 const ProfileWrapper = style.div`
@@ -54,8 +54,7 @@ const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const initXPosition = idx * 170;
-    console.log({ idx, initXPosition });
+    const initXPosition = idx * 20;
     return (
       <motion.div animate={{ x: getRange(window.innerWidth, initXPosition) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
         <ProfileWrapper>
@@ -109,6 +108,7 @@ function Home(props) {
     <HomeWrapper>
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
+      <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
       <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
       <ProfileSectionWrapper>{renderProfileSection3()}</ProfileSectionWrapper>
     </HomeWrapper>
