@@ -54,11 +54,50 @@ const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
+    const initXPosition = idx * 170;
+    console.log({ idx, initXPosition });
     return (
-      <motion.div animate={{ x: getRange(window.innerWidth, characters.length, idx) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+      <motion.div animate={{ x: getRange(window.innerWidth, initXPosition) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
         <ProfileWrapper>
           <img src={c.url} alt={c.name} />
           <span>{idx}</span>
+        </ProfileWrapper>
+      </motion.div>
+    );
+  });
+};
+
+const renderProfileSection2 = () => {
+  // let characters = clone(CHARACTERS);
+  let characters = [CHARACTERS[0]];
+  shuffleArray(characters);
+  return characters.map((c, idx) => {
+    const initX = idx * 170;
+    console.log(2, { initX });
+    return (
+      <motion.div initial={{ x: initX }} animate={{ x: getRange(window.innerWidth, initX) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+        <ProfileWrapper>
+          <img src={c.url} alt={c.name} />
+          <span>{1}</span>
+        </ProfileWrapper>
+      </motion.div>
+    );
+  });
+};
+
+const renderProfileSection3 = () => {
+  // let characters = clone(CHARACTERS);
+  let characters = [CHARACTERS[1]];
+  shuffleArray(characters);
+  return characters.map((c, idx) => {
+    const initX = 1 * 170;
+    console.log(3, { initX });
+
+    return (
+      <motion.div initial={{ x: initX }} animate={{ x: getRange(window.innerWidth, initX) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+        <ProfileWrapper>
+          <img src={c.url} alt={c.name} />
+          <span>{1}</span>
         </ProfileWrapper>
       </motion.div>
     );
@@ -70,7 +109,8 @@ function Home(props) {
     <HomeWrapper>
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
-      <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
+      <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
+      <ProfileSectionWrapper>{renderProfileSection3()}</ProfileSectionWrapper>
     </HomeWrapper>
   );
 }
