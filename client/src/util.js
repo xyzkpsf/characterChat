@@ -26,7 +26,7 @@ const clone = (items) => items.map((item) => (Array.isArray(item) ? clone(item) 
 const getRange = (range, initXPosition) => {
   // 85 = 0.5(img width + gap)
   // minues idx times half width is of each profile image
-  const half = Math.floor(range / 2) + 85;
+  const half = Math.floor(range / 2);
   const right = [...Array(half).keys()];
   const left = right.map((n) => n - half);
   // 1. add initX to position on each time frame
@@ -34,8 +34,17 @@ const getRange = (range, initXPosition) => {
   // 3. compensate last missing frames as removed offsets
   return [...left, ...right]
     .map((x) => x + initXPosition)
-    .filter((x) => x < half)
+    .filter((x) => x < half + initXPosition)
     .concat(left.slice(0, initXPosition));
+  // if (idx === 0) {
+  //   return [-half, half, -half];
+  // }
+  // if (idx === 1) {
+  //   return [-half, half];
+  // }
+  // if (idx === 2) {
+  //   return [-half, half];
+  // }
 };
 
 export { CHARACTERS, shuffleArray, clone, getRange };

@@ -54,12 +54,12 @@ const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const initXPosition = idx * 20;
+    const initXPosition = idx * 50;
     return (
-      <motion.div animate={{ x: getRange(window.innerWidth, initXPosition) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+      <motion.div key={c.name} animate={{ x: getRange(window.innerWidth, initXPosition) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
         <ProfileWrapper>
           <img src={c.url} alt={c.name} />
-          <span>{idx}</span>
+          <span>{c.name}</span>
         </ProfileWrapper>
       </motion.div>
     );
@@ -89,7 +89,7 @@ const renderProfileSection3 = () => {
   let characters = [CHARACTERS[1]];
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const initX = 1 * 170;
+    const initX = 1 * 50;
     console.log(3, { initX });
 
     return (
@@ -109,8 +109,8 @@ function Home(props) {
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
-      <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
-      <ProfileSectionWrapper>{renderProfileSection3()}</ProfileSectionWrapper>
+      {/* <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
+      <ProfileSectionWrapper>{renderProfileSection3()}</ProfileSectionWrapper> */}
     </HomeWrapper>
   );
 }
