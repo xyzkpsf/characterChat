@@ -27,14 +27,12 @@ const TitleWrapper2 = style.span`
   `;
 
 const ProfileSectionWrapper = style.div`
-  display: flex;
-  flex-direction: row;
   width: 100%;
   height: 200px;
-  column-gap: 20px;
   justify-content: center;
   align-items: center;
-  // overflow-x: hidden;
+  position: relative;
+  overflow-x: hidden;
 `;
 
 const ProfileWrapper = style.div`
@@ -42,6 +40,7 @@ const ProfileWrapper = style.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 10px;
   
   img {
     width: 150px;
@@ -50,18 +49,27 @@ const ProfileWrapper = style.div`
   }
 `;
 
+const ProfileFrameWrapper = style.div`
+  top: 0px;
+  left: ${(props) => props.left}px;
+  position: absolute;
+`;
+
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const initXPosition = idx * 50;
+    // const initXPosition = idx * 10;
+    const offset = idx * 180;
     return (
-      <motion.div key={c.name} animate={{ x: getRange(window.innerWidth, initXPosition) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
-        <ProfileWrapper>
-          <img src={c.url} alt={c.name} />
-          <span>{c.name}</span>
-        </ProfileWrapper>
-      </motion.div>
+      <ProfileFrameWrapper left={offset}>
+        <motion.div key={c.name} animate={{ x: getRange(window.innerWidth, offset) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }} onClick={() => console.log('click', c.name)}>
+          <ProfileWrapper>
+            <img src={c.url} alt={c.name} />
+            <span>{c.name}</span>
+          </ProfileWrapper>
+        </motion.div>
+      </ProfileFrameWrapper>
     );
   });
 };
@@ -71,7 +79,7 @@ const renderProfileSection2 = () => {
   let characters = [CHARACTERS[0]];
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const initX = idx * 170;
+    const initX = idx * 190;
     console.log(2, { initX });
     return (
       <motion.div initial={{ x: initX }} animate={{ x: getRange(window.innerWidth, initX) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
@@ -109,8 +117,6 @@ function Home(props) {
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
-      {/* <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
-      <ProfileSectionWrapper>{renderProfileSection3()}</ProfileSectionWrapper> */}
     </HomeWrapper>
   );
 }
