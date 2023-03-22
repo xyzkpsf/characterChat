@@ -2,7 +2,7 @@ import React from 'react';
 import style from 'styled-components';
 import { motion } from 'framer-motion';
 
-import { CHARACTERS, shuffleArray, clone, getRange } from '../util';
+import { CHARACTERS, shuffleArray, clone, getRange, getOpacity } from '../util';
 
 const HomeWrapper = style.div`
   display: flex;
@@ -29,9 +29,10 @@ const TitleWrapper2 = style.span`
 const ProfileSectionWrapper = style.div`
   width: 100%;
   height: 200px;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  position: relative;
+  display: flex;
+  flex-direction: row;
   overflow-x: hidden;
 `;
 
@@ -40,7 +41,7 @@ const ProfileWrapper = style.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 10px;
+  margin-right: 20px;
   
   img {
     width: 150px;
@@ -49,62 +50,29 @@ const ProfileWrapper = style.div`
   }
 `;
 
-const ProfileFrameWrapper = style.div`
-  top: 0px;
-  left: ${(props) => props.left}px;
-  position: absolute;
-`;
+// const ProfileFrameWrapper = style.div`
+//   top: 0px;
+//   left: ${(props) => props.left}px;
+//   position: absolute;
+// `;
 
+// TODO: need to apply logic to limit nums of characters according to screen width
+// TODO: understand how the frame array works
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    // const initXPosition = idx * 10;
-    const offset = idx * 180;
+    const offset = idx * 170;
     return (
-      <ProfileFrameWrapper left={offset}>
-        <motion.div key={c.name} animate={{ x: getRange(window.innerWidth, offset) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }} onClick={() => console.log('click', c.name)}>
-          <ProfileWrapper>
-            <img src={c.url} alt={c.name} />
-            <span>{c.name}</span>
-          </ProfileWrapper>
-        </motion.div>
-      </ProfileFrameWrapper>
-    );
-  });
-};
-
-const renderProfileSection2 = () => {
-  // let characters = clone(CHARACTERS);
-  let characters = [CHARACTERS[0]];
-  shuffleArray(characters);
-  return characters.map((c, idx) => {
-    const initX = idx * 190;
-    console.log(2, { initX });
-    return (
-      <motion.div initial={{ x: initX }} animate={{ x: getRange(window.innerWidth, initX) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
+      <motion.div
+        key={c.name}
+        animate={{ x: getRange(window.innerWidth + 85, offset), opacity: getOpacity(window.innerWidth + 85, offset) }}
+        transition={{ repeat: Infinity, type: 'tween', duration: 15 }}
+        onClick={() => console.log('click', c.name)}
+      >
         <ProfileWrapper>
           <img src={c.url} alt={c.name} />
-          <span>{1}</span>
-        </ProfileWrapper>
-      </motion.div>
-    );
-  });
-};
-
-const renderProfileSection3 = () => {
-  // let characters = clone(CHARACTERS);
-  let characters = [CHARACTERS[1]];
-  shuffleArray(characters);
-  return characters.map((c, idx) => {
-    const initX = 1 * 50;
-    console.log(3, { initX });
-
-    return (
-      <motion.div initial={{ x: initX }} animate={{ x: getRange(window.innerWidth, initX) }} transition={{ repeat: Infinity, type: 'tween', duration: 15 }}>
-        <ProfileWrapper>
-          <img src={c.url} alt={c.name} />
-          <span>{1}</span>
+          <span>{c.name}</span>
         </ProfileWrapper>
       </motion.div>
     );

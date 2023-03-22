@@ -6,6 +6,7 @@ const CHARACTERS = [
   { name: 'Walter White', url: 'https://xyzdoc.s3.us-west-2.amazonaws.com/walterwhite.jpeg' },
   { name: 'Morty Smith', url: 'https://xyzdoc.s3.us-west-2.amazonaws.com/morty.png' },
   { name: 'Mario', url: 'https://xyzdoc.s3.us-west-2.amazonaws.com/mario.png' },
+  { name: 'Luigi', url: 'https://xyzdoc.s3.us-west-2.amazonaws.com/luigi.png' },
   { name: 'Luigi', url: 'https://xyzdoc.s3.us-west-2.amazonaws.com/luigi.png' }
 ];
 
@@ -24,8 +25,16 @@ const clone = (items) => items.map((item) => (Array.isArray(item) ? clone(item) 
  * @returns {Array} array of x position on each time frame
  */
 const getRange = (range, offset) => {
-  const frames = [...Array(range + 150).keys()];
-  return frames.filter((x) => x < range - offset).concat(frames.slice(0, offset + 1).map((x) => x - offset - 75));
+  const frames = [...Array(range).keys()];
+  return frames.filter((x) => x < range - offset).concat(frames.slice(0, offset).map((x) => x - offset));
 };
 
-export { CHARACTERS, shuffleArray, clone, getRange };
+const getOpacity = (range, offset) => {
+  const frames = new Array(range).fill(1);
+  const shiftIndex = range - offset;
+  frames[shiftIndex] = 0;
+  frames[shiftIndex - 1] = 0;
+  return frames;
+};
+
+export { CHARACTERS, shuffleArray, clone, getRange, getOpacity };
