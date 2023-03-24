@@ -50,12 +50,6 @@ const ProfileWrapper = style.div`
   }
 `;
 
-// const ProfileFrameWrapper = style.div`
-//   top: 0px;
-//   left: ${(props) => props.left}px;
-//   position: absolute;
-// `;
-
 // TODO: need to apply logic to limit nums of characters according to screen width
 // TODO: understand how the frame array works
 const renderProfileSection = () => {
@@ -63,11 +57,35 @@ const renderProfileSection = () => {
   shuffleArray(characters);
   return characters.map((c, idx) => {
     const offset = idx * 170;
+    const vw = window.innerWidth + 170;
     return (
       <motion.div
         key={c.name}
-        animate={{ x: getRange(window.innerWidth + 85, offset), opacity: getOpacity(window.innerWidth + 85, offset) }}
-        transition={{ repeat: Infinity, type: 'tween', duration: 15 }}
+        animate={{ x: getRange(vw, offset), opacity: getOpacity(window.innerWidth + 85, offset) }}
+        transition={{ repeat: Infinity, type: 'tween', duration: 10 }}
+        onClick={() => console.log('click', c.name)}
+      >
+        <ProfileWrapper>
+          <img src={c.url} alt={c.name} />
+          <span>{c.name}</span>
+        </ProfileWrapper>
+      </motion.div>
+    );
+  });
+};
+
+const renderProfileSection2 = () => {
+  let characters = clone(CHARACTERS);
+  shuffleArray(characters);
+  return characters.map((c, idx) => {
+    const offset = 170;
+    const vw = window.innerWidth + 170;
+    return (
+      <motion.div
+        key={c.name}
+        initial={{ x: offset }}
+        animate={{ x: getRange(vw, offset), opacity: getOpacity(window.innerWidth + 85, offset) }}
+        transition={{ repeat: Infinity, type: 'tween', duration: 10 }}
         onClick={() => console.log('click', c.name)}
       >
         <ProfileWrapper>
@@ -85,6 +103,7 @@ function Home(props) {
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
+      <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
     </HomeWrapper>
   );
 }
