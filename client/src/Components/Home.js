@@ -34,6 +34,7 @@ const ProfileSectionWrapper = style.div`
   display: flex;
   flex-direction: row;
   overflow-x: hidden;
+  column-gap: 50px;
 `;
 
 const ProfileWrapper = style.div`
@@ -41,7 +42,7 @@ const ProfileWrapper = style.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-right: 20px;
+  // margin-right: 50px;
   
   img {
     width: 150px;
@@ -56,13 +57,13 @@ const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const offset = idx * 170;
-    const vw = window.innerWidth + 170;
+    const offset = idx * 200;
+    const vw = window.innerWidth + 200;
     return (
       <motion.div
         key={c.name}
-        animate={{ x: getRange(vw, offset), opacity: getOpacity(window.innerWidth + 85, offset) }}
-        transition={{ repeat: Infinity, type: 'tween', duration: 10 }}
+        animate={{ x: getRange(vw, offset), opacity: getOpacity(vw, offset) }}
+        transition={{ repeat: Infinity, type: 'tween', duration: 20 }}
         onClick={() => console.log('click', c.name)}
       >
         <ProfileWrapper>
@@ -103,7 +104,7 @@ function Home(props) {
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
-      <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper>
+      {/* <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper> */}
     </HomeWrapper>
   );
 }
