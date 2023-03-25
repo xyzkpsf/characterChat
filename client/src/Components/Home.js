@@ -52,7 +52,6 @@ const ProfileWrapper = style.div`
 `;
 
 // TODO: need to apply logic to limit nums of characters according to screen width
-// TODO: understand how the frame array works
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
