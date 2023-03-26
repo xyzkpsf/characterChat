@@ -59,7 +59,7 @@ const renderProfileSection = () => {
   return characters.map((c, idx) => {
     const offset = idx * 220;
     // const vw = window.innerWidth + 220;
-    const vw = 1100 + 220;
+    const vw = 1535 + 220;
     return (
       <motion.div
         key={c.name}
@@ -68,7 +68,16 @@ const renderProfileSection = () => {
         onClick={() => console.log('click', c.name)}
       >
         <ProfileWrapper>
-          <img src={c.url} alt={c.name} />
+          <motion.div
+          // whileHover={{
+          //   scale: 0.5,
+          //   x: -50,
+          //   y: -50,
+          //   transition: { duration: 2 }
+          // }}
+          >
+            <img src={c.url} alt={c.name} />
+          </motion.div>
           <span>{c.name}</span>
         </ProfileWrapper>
       </motion.div>
