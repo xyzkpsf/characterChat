@@ -27,7 +27,8 @@ const TitleWrapper2 = style.span`
   `;
 
 const ProfileSectionWrapper = style.div`
-  width: 100%;
+  width: 80%;
+  max-width: 1100px;
   height: 200px;
   justify-content: flex-start;
   align-items: center;
@@ -57,7 +58,8 @@ const renderProfileSection = () => {
   shuffleArray(characters);
   return characters.map((c, idx) => {
     const offset = idx * 220;
-    const vw = window.innerWidth + 220;
+    // const vw = window.innerWidth + 220;
+    const vw = 1100 + 220;
     return (
       <motion.div
         key={c.name}
