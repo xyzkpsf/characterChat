@@ -34,7 +34,7 @@ const ProfileSectionWrapper = style.div`
   display: flex;
   flex-direction: row;
   overflow-x: hidden;
-  column-gap: 50px;
+  column-gap: 70px;
 `;
 
 const ProfileWrapper = style.div`
@@ -51,41 +51,18 @@ const ProfileWrapper = style.div`
   }
 `;
 
-// TODO: need to apply logic to limit nums of characters according to screen width
+// TODO: Set a max width to rotate 6 icons fixed
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const offset = idx * 200;
-    const vw = window.innerWidth + 200;
+    const offset = idx * 220;
+    const vw = window.innerWidth + 220;
     return (
       <motion.div
         key={c.name}
         animate={{ x: getRange(vw, offset), opacity: getOpacity(vw, offset) }}
         transition={{ repeat: Infinity, type: 'tween', duration: 20 }}
-        onClick={() => console.log('click', c.name)}
-      >
-        <ProfileWrapper>
-          <img src={c.url} alt={c.name} />
-          <span>{c.name}</span>
-        </ProfileWrapper>
-      </motion.div>
-    );
-  });
-};
-
-const renderProfileSection2 = () => {
-  let characters = clone(CHARACTERS);
-  shuffleArray(characters);
-  return characters.map((c, idx) => {
-    const offset = 170;
-    const vw = window.innerWidth + 170;
-    return (
-      <motion.div
-        key={c.name}
-        initial={{ x: offset }}
-        animate={{ x: getRange(vw, offset), opacity: getOpacity(window.innerWidth + 85, offset) }}
-        transition={{ repeat: Infinity, type: 'tween', duration: 10 }}
         onClick={() => console.log('click', c.name)}
       >
         <ProfileWrapper>
@@ -103,7 +80,6 @@ function Home(props) {
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
-      {/* <ProfileSectionWrapper>{renderProfileSection2()}</ProfileSectionWrapper> */}
     </HomeWrapper>
   );
 }
