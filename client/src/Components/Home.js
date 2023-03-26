@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 
 import { CHARACTERS, shuffleArray, clone, getRange, getOpacity } from '../util';
 
+// Fixed moving range + 220px initial offset
+const PROFILEWIDTH = 1535 + 220;
+
 const HomeWrapper = style.div`
   display: flex;
   flex-direction: column;
@@ -43,7 +46,6 @@ const ProfileWrapper = style.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  // margin-right: 50px;
   
   img {
     width: 150px;
@@ -52,29 +54,28 @@ const ProfileWrapper = style.div`
   }
 `;
 
-// TODO: Set a max width to rotate 6 icons fixed
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
     const offset = idx * 220;
-    // const vw = window.innerWidth + 220;
-    const vw = 1535 + 220;
+
     return (
       <motion.div
         key={c.name}
-        animate={{ x: getRange(vw, offset), opacity: getOpacity(vw, offset) }}
+        animate={{ x: getRange(PROFILEWIDTH, offset), opacity: getOpacity(PROFILEWIDTH, offset) }}
         transition={{ repeat: Infinity, type: 'tween', duration: 20 }}
         onClick={() => console.log('click', c.name)}
       >
         <ProfileWrapper>
           <motion.div
-          // whileHover={{
-          //   scale: 0.5,
-          //   x: -50,
-          //   y: -50,
-          //   transition: { duration: 2 }
-          // }}
+            whileHover={{
+              rotateY: 180,
+              transition: {
+                type: 'smooth',
+                duration: 2
+              }
+            }}
           >
             <img src={c.url} alt={c.name} />
           </motion.div>
