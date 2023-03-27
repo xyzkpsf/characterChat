@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 
 import { CHARACTERS, shuffleArray, clone, getRange, getOpacity } from '../util';
 
@@ -67,22 +67,26 @@ const movingVariants = {
 };
 
 //TODO: try to convert to variants and pause with useAnimationControls()
-const renderProfileSection = () => {
+const renderProfileSection = (controls) => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
   return characters.map((c, idx) => {
-    const offset = idx * 220;
-
     return (
-      <motion.div key={c.name} custom={idx} variants={movingVariants} animate="move" onClick={() => console.log('click', c.name)}>
+      <motion.div key={c.name} custom={idx} variants={movingVariants} animate={controls} onClick={() => console.log('click', c.name)}>
         <ProfileWrapper>
           <motion.div
-            whileHover={{
-              rotateY: 180,
-              transition: {
-                type: 'smooth',
-                duration: 2
-              }
+            // whileHover={{
+            //   rotateY: 180,
+            //   transition: {
+            //     type: 'smooth',
+            //     duration: 2
+            //   }
+            // }}
+            onMouseEnter={() => {
+              controls.stop();
+            }}
+            onMouseLeave={() => {
+              controls.start('move');
             }}
           >
             <img src={c.url} alt={c.name} />
@@ -95,11 +99,17 @@ const renderProfileSection = () => {
 };
 
 function Home(props) {
+  const controls = useAnimationControls();
+
+  useEffect(() => {
+    controls.start('move');
+  });
+
   return (
     <HomeWrapper>
       <TitleWrapper>Welcome to Character Chat!</TitleWrapper>
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
-      <ProfileSectionWrapper>{renderProfileSection()}</ProfileSectionWrapper>
+      <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper>
     </HomeWrapper>
   );
 }
