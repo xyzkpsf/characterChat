@@ -87,6 +87,8 @@ const renderProfileSection = (controls) => {
             }}
             onMouseLeave={() => {
               controls.start('move');
+              // TODO: firgure out how to get curent x position
+              // TODO: create another variant that starts from the current position
             }}
           >
             <img src={c.url} alt={c.name} />
