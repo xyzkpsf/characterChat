@@ -54,6 +54,19 @@ const ProfileWrapper = style.div`
   }
 `;
 
+const movingVariants = {
+  move: (idx) => ({
+    x: getRange(PROFILEWIDTH, idx * 220),
+    opacity: getOpacity(PROFILEWIDTH, idx * 220),
+    transition: {
+      repeat: Infinity,
+      type: 'tween',
+      duration: 20
+    }
+  })
+};
+
+//TODO: try to convert to variants and pause with useAnimationControls()
 const renderProfileSection = () => {
   let characters = clone(CHARACTERS);
   shuffleArray(characters);
@@ -61,12 +74,7 @@ const renderProfileSection = () => {
     const offset = idx * 220;
 
     return (
-      <motion.div
-        key={c.name}
-        animate={{ x: getRange(PROFILEWIDTH, offset), opacity: getOpacity(PROFILEWIDTH, offset) }}
-        transition={{ repeat: Infinity, type: 'tween', duration: 20 }}
-        onClick={() => console.log('click', c.name)}
-      >
+      <motion.div key={c.name} custom={idx} variants={movingVariants} animate="move" onClick={() => console.log('click', c.name)}>
         <ProfileWrapper>
           <motion.div
             whileHover={{
