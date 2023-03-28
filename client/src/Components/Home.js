@@ -29,7 +29,9 @@ const TitleWrapper2 = style.span`
   text-align: center;
   `;
 
-const ProfileSectionWrapper = style.div`
+const ProfileSectionWrapper = style.div.attrs({
+  className: 'profileWrapper'
+})`
   width: 80%;
   max-width: 1100px;
   height: 200px;
@@ -72,7 +74,7 @@ const renderProfileSection = (controls) => {
   shuffleArray(characters);
   return characters.map((c, idx) => {
     return (
-      <motion.div key={c.name} custom={idx} variants={movingVariants} animate={controls} onClick={() => console.log('click', c.name)}>
+      <motion.div className={`row_1_${idx}_profile`} key={c.name} custom={idx} variants={movingVariants} animate={controls} onClick={() => console.log('click', c.name)}>
         <ProfileWrapper>
           <motion.div
             // whileHover={{
@@ -84,6 +86,8 @@ const renderProfileSection = (controls) => {
             // }}
             onMouseEnter={() => {
               controls.stop();
+              const ele = document.getElementsByClassName(`row_1_${idx}_profile`);
+              console.log({ ele, first_child: ele[0], offSetLeft: ele[0].offsetLeft });
             }}
             onMouseLeave={() => {
               controls.start('move');
