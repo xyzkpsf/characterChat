@@ -68,35 +68,17 @@ const movingVariants = {
   })
 };
 
-const show = {
-  opacity: 1
-};
-
-const hide = {
-  opacity: 0
+const profileVariants = {
+  showProfile: (item) => ({
+    opacity: item === 'profile' ? 1 : 0
+  }),
+  showButton: (item) => ({
+    opacity: item === 'profile' ? 0 : 1
+  })
 };
 
 function Home(props) {
   const controls = useAnimationControls();
-  const [showProfile_0, setShowProfile_0] = useState(true);
-  const [showProfile_1, setShowProfile_1] = useState(true);
-  const [showProfile_2, setShowProfile_2] = useState(true);
-  const [showProfile_3, setShowProfile_3] = useState(true);
-  const [showProfile_4, setShowProfile_4] = useState(true);
-  const [showProfile_5, setShowProfile_5] = useState(true);
-  const [showProfile_6, setShowProfile_6] = useState(true);
-  const [showProfile_7, setShowProfile_7] = useState(true);
-
-  const showProfiles = [
-    [showProfile_0, setShowProfile_0],
-    [showProfile_1, setShowProfile_1],
-    [showProfile_2, setShowProfile_2],
-    [showProfile_3, setShowProfile_3],
-    [showProfile_4, setShowProfile_4],
-    [showProfile_5, setShowProfile_5],
-    [showProfile_6, setShowProfile_6],
-    [showProfile_7, setShowProfile_7]
-  ];
 
   // useEffect(() => {
   //   controls.start('move');
@@ -108,21 +90,12 @@ function Home(props) {
     shuffleArray(characters);
     return characters.map((c, idx) => {
       return (
-        <motion.div
-          key={c.name}
-          custom={idx}
-          variants={movingVariants}
-          animate={'move'}
-          // onMouseEnter={() => {
-          //   showProfiles[idx][1](false);
-          // }}
-          // onMouseLeave={() => {
-          //   showProfiles[idx][1](true);
-          // }}
-          onClick={() => console.log('click', c.name)}
-        >
+        <motion.div key={c.name} custom={idx} variants={movingVariants} animate={'move'} onClick={() => console.log('click', c.name)}>
           <ProfileWrapper>
-            <motion.img key={c.url} src={c.url} />
+            <motion.img key={c.url} src={c.url} custom={'profile'} variants={profileVariants} animate={'showProfile'} whileHover={{ opacity: 0, duration: 2 }} />
+            <motion.button initial={{ opacity: 0 }} whileHover={{ opacity: 1, duration: 2 }}>
+              Chat
+            </motion.button>
             <span>{c.name}</span>
           </ProfileWrapper>
         </motion.div>
