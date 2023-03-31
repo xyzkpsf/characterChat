@@ -82,7 +82,8 @@ const movingVariants = {
   }),
   left: (idx) => ({
     x: getRange2(PROFILEWIDTH, idx * 220),
-    opacity: getOpacity(PROFILEWIDTH, idx * 220),
+    // opacity: getOpacity(PROFILEWIDTH, idx * 220),
+    opacity: 1,
     transition: {
       repeat: Infinity,
       type: 'tween',
@@ -129,8 +130,12 @@ function Home(props) {
     let characters = clone(CHARACTERS);
     shuffleArray(characters);
     return characters.map((c, idx) => {
+      // need to use reverse idx here because flex-end put the first element at left most
+      // reverse order seems correct, need to figure out why the keyframe function has very large number
+      console.log('orignal idx', idx, 'new idx', characters.length - 1 - idx, c.name, 'left', getRange2(PROFILEWIDTH, (characters.length - 1 - idx) * 220));
+
       return (
-        <motion.div key={c.name} custom={idx} variants={movingVariants} animate={'left'} onClick={() => console.log('click', c.name)}>
+        <motion.div key={c.name} custom={characters.length - 1 - idx} variants={movingVariants} animate={'left'} onClick={() => console.log('click', c.name)}>
           <ProfileWrapper>
             <motion.img key={c.url} src={c.url} custom={'profile'} variants={profileVariants} animate={'showProfile'} />
             <motion.button initial={{ opacity: 0 }} whileHover={{ opacity: 1, duration: 2 }}>
@@ -149,7 +154,7 @@ function Home(props) {
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper>
       <ProfileSectionWrapper2>{renderProfileSectionLeft(controls)}</ProfileSectionWrapper2>
-      <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper>
+      {/* <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper> */}
     </HomeWrapper>
   );
 }

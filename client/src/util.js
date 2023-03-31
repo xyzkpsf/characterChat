@@ -31,9 +31,9 @@ const getRange = (range, offset) => {
 
 const getRange2 = (range, offset) => {
   const frames = [...Array(range).keys()].map((x) => x * -1 + 220);
-  // return frames;
-  return frames.filter((x) => x > -range + offset + 220).concat(frames.slice(range - offset, range).map((x) => x + range));
-  // [-1, -2, -3,,,,,-99,-100], offset = 60, => [-1, -2, -3,....-40], ( -range + offset + 220), [60, 59, 58.....1,0], []
+  return frames.filter((x) => x > -range + offset + 220).concat(frames.slice(range - offset, range).map((x) => x + range + offset - 220));
+  // [-1, -2, -3,,,,,-99,-100], offset = 60, => [-1, -2, -3,....-40] filter out x < -(range-offset), ( -range + offset + 220), [60, 59, 58.....1,0], []
+  // [-1, -2, -3, ... -40, offset(60), offset-1(59),. ... 1, 0]
 };
 
 // TODO: understand why opacity array shift the index from install hook
