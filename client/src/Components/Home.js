@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import style from 'styled-components';
 import { motion, useAnimationControls } from 'framer-motion';
 
-import { CHARACTERS, shuffleArray, clone, getRange, getOpacity, getRange2 } from '../util';
+import { CHARACTERS, shuffleArray, clone, getRange, getOpacity, getRangeLeft, getOpacityLeft } from '../util';
 
 // Fixed moving range + 220px initial offset
 const PROFILEWIDTH = 1535 + 220;
@@ -81,9 +81,8 @@ const movingVariants = {
     }
   }),
   left: (idx) => ({
-    x: getRange2(PROFILEWIDTH, idx * 220),
-    // opacity: getOpacity(PROFILEWIDTH, idx * 220),
-    opacity: 1,
+    x: getRangeLeft(PROFILEWIDTH, idx * 220),
+    opacity: getOpacityLeft(PROFILEWIDTH, idx * 220),
     transition: {
       repeat: Infinity,
       type: 'tween',
@@ -132,7 +131,6 @@ function Home(props) {
     return characters.map((c, idx) => {
       // need to use reverse idx here because flex-end put the first element at left most
       // reverse order seems correct, need to figure out why the keyframe function has very large number
-      console.log('orignal idx', idx, 'new idx', characters.length - 1 - idx, c.name, 'left', getRange2(PROFILEWIDTH, (characters.length - 1 - idx) * 220));
 
       return (
         <motion.div key={c.name} custom={characters.length - 1 - idx} variants={movingVariants} animate={'left'} onClick={() => console.log('click', c.name)}>
@@ -154,7 +152,7 @@ function Home(props) {
       <TitleWrapper2>Click on your favorite to start chatting!</TitleWrapper2>
       <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper>
       <ProfileSectionWrapper2>{renderProfileSectionLeft(controls)}</ProfileSectionWrapper2>
-      {/* <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper> */}
+      <ProfileSectionWrapper>{renderProfileSection(controls)}</ProfileSectionWrapper>
     </HomeWrapper>
   );
 }

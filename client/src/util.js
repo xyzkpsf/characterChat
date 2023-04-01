@@ -29,11 +29,11 @@ const getRange = (range, offset) => {
   return frames.filter((x) => x < range - offset - 220).concat(frames.slice(0, offset).map((x) => x - offset));
 };
 
-const getRange2 = (range, offset) => {
+const getRangeLeft = (range, offset) => {
   const frames = [...Array(range).keys()].map((x) => x * -1 + 220);
-  return frames.filter((x) => x > -range + offset + 220).concat(frames.slice(range - offset, range).map((x) => x + range + offset - 220));
+  return frames.filter((x) => x > -range + offset + 220).concat([...Array(offset + 220).keys()].reverse());
   // [-1, -2, -3,,,,,-99,-100], offset = 60, => [-1, -2, -3,....-40] filter out x < -(range-offset), ( -range + offset + 220), [60, 59, 58.....1,0], []
-  // [-1, -2, -3, ... -40, offset(60), offset-1(59),. ... 1, 0]
+  // [-1, -2, -3, ... -40, offset(60), concat (range=offset array. reverse) offset-1(59),. ... 1, 0]
 };
 
 // TODO: understand why opacity array shift the index from install hook
@@ -46,4 +46,12 @@ const getOpacity = (range, offset) => {
   return frames;
 };
 
-export { CHARACTERS, shuffleArray, clone, getRange, getRange2, getOpacity };
+const getOpacityLeft = (range, offset) => {
+  const frames = new Array(range).fill(1);
+  const shiftIndex = range - offset + 2;
+  frames[shiftIndex] = 0;
+  frames[shiftIndex + 1] = 0;
+  return frames;
+};
+
+export { CHARACTERS, shuffleArray, clone, getRange, getRangeLeft, getOpacity, getOpacityLeft };
